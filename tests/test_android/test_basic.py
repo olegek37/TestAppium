@@ -13,8 +13,8 @@ import time
 
 class TestCommon:
 
-    def test_demostand(self, driver):
-        """Тест проверяет авторизацию на демо-стенде"""
+    def test_demostand_autorisation_right(self, driver):
+        """Тест проводит попытку авторизации на демо-стенде с верными данными"""
         if not check_network_connection:
             pytest.skip("Пропуск: отсутствует интернет-соединение")
         try:
@@ -30,7 +30,6 @@ class TestCommon:
             key_field = driver.find_element(*AndroidLocators.KEY_FILED)
             key_field.clear()
             key_field.send_keys("1212121212121212")
-            # key_field.send_keys("121212145454212121214")
             home_button.click()
             time.sleep(10)
             take_screenshot(driver,"stand_auto")
@@ -40,10 +39,35 @@ class TestCommon:
         except Exception as e:
             take_screenshot(driver, "ошибка авторизации")
             pytest.fail(f"ошибка авторизации: {str(e)}")
+     
 
+    def test_demostand_autorisation_wrong(self, driver):
+        """Тест проводит попытку авторизации на демо-стенде с неверными данными"""
+        if not check_network_connection:
+            pytest.skip("Пропуск: отсутствует интернет-соединение")
+        try:
+            favorites_button = driver.find_element(*AndroidLocators.FAVORITES_BUTTON)
+            favorites_button.click()
+            home_button = driver.find_element(*AndroidLocators.HOME_BUTTON)
+            settings_button = driver.find_element(*AndroidLocators.SETTINGS_BUTTON)
+            settings_button.click()
+            connection_button = driver.find_element(*AndroidLocators.CONNECTION_BUTTON)
+            connection_button.click()
+            # driver.back()
+            time.sleep(1)
+            key_field = driver.find_element(*AndroidLocators.KEY_FILED)
+            key_field.clear()
+            key_field.send_keys("121212145454212121214")
+            home_button.click()
+            time.sleep(10)
+            take_screenshot(driver,"stand_auto")
+            # проверки после клика
+            assert "Гостиная" not in driver.page_source, "Прошла авторизация с неправильными данными"
+            
+        except Exception as e:
+            take_screenshot(driver, "авторизация с неверными данными")
+            pytest.fail(f"авторизация с неверными данными: {str(e)}")
 
-        # def test_demostand(self, driver):
-        #     assert
 
         # def test_demostand(self, driver):
         #     assert
