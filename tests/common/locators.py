@@ -1,6 +1,4 @@
 from appium.webdriver.common.appiumby import AppiumBy
-# from selenium.webdriver.support.ui import WebDriverWait
-# from appium.webdriver.common.touch_action import TouchAction
 import time
 
 
@@ -19,8 +17,9 @@ class AndroidLocators:
     CONNECTION_BUTTON = (AppiumBy.XPATH, "//*[@text='Соединение']")
     ABOUT_BUTTON = (AppiumBy.XPATH,"//*[@text='О приложении']")
 
-
-
+    #поле ввода
+    # KEY_FILED = (AppiumBy.XPATH, "//android.widget.EditText[@resource-id='key-field']")
+    KEY_FILED = (AppiumBy.XPATH, '//android.widget.EditText[@resource-id="key-field"]')
 
 
 class IOSLocators:
