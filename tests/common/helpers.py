@@ -1,6 +1,8 @@
 import base64
 import os
 from datetime import datetime
+from appium import webdriver
+
 
 def take_screenshot(driver, test_name, path="screenshots"):
     """Универсальная функция для создания скриншотов"""
@@ -18,3 +20,15 @@ def take_screenshot(driver, test_name, path="screenshots"):
     except Exception as e:
         print(f"Screenshot error: {e}")
         return None
+    
+    
+def check_network_connection(driver: webdriver) -> bool:
+    """Проверяем доступность интернета на телефону"""
+    try:
+        output = driver.execute_script('mobile: shell', {
+            'command': 'ping',
+            'args': ['-c', '1', '8.8.8.8']
+        })
+        return "1 received" in output
+    except:
+        return False

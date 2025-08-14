@@ -8,6 +8,20 @@ def pytest_addoption(parser):
     parser.addoption("--platform", action="store", default="android", help="platform to test: android or ios")
     parser.addoption("--appium_server", action="store", default="http://192.168.1.253:4723", help="Appium server URL")
 
+# @pytest.fixture
+# def check_network_connection(driver: webdriver) -> bool:
+#     """Проверяем доступность интернета на телефону"""
+#     try:
+#         output = driver.execute_script('mobile: shell', {
+#             'command': 'ping',
+#             'args': ['-c', '1', '8.8.8.8']
+#         })
+#         return "1 received" in output
+#     except:
+#         return False
+
+
+
 @pytest.fixture(scope='session')
 def appium_server(request):
     return request.config.getoption("--appium_server")

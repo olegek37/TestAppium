@@ -1,19 +1,26 @@
 import pytest
 from tests.common.helpers import take_screenshot
+from tests.common.helpers import check_network_connection
 from tests.common.locators import AndroidLocators
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import visibility_of_element_located
+# from selenium.webdriver.support.expected_conditions import visibility_of_element_located
 import time
 
 
 @pytest.mark.android
-class TestHomeScreen:
+@pytest.mark.network
+
+class TestCommon:
+
     def test_demostand(self, driver):
         """Тест проверяет авторизацию на демо-стенде"""
+        if not check_network_connection:
+            pytest.skip("Пропуск: отсутствует интернет-соединение")
         try:
+            favorites_button = driver.find_element(*AndroidLocators.FAVORITES_BUTTON)
+            favorites_button.click()
             home_button = driver.find_element(*AndroidLocators.HOME_BUTTON)
-            home_button.click()
             settings_button = driver.find_element(*AndroidLocators.SETTINGS_BUTTON)
             settings_button.click()
             connection_button = driver.find_element(*AndroidLocators.CONNECTION_BUTTON)
@@ -33,3 +40,18 @@ class TestHomeScreen:
         except Exception as e:
             take_screenshot(driver, "ошибка авторизации")
             pytest.fail(f"ошибка авторизации: {str(e)}")
+
+
+        # def test_demostand(self, driver):
+        #     assert
+
+        # def test_demostand(self, driver):
+        #     assert
+        #     def test_demostand(self, driver):
+        #     assert
+
+        # def test_demostand(self, driver):
+        #     assert
+
+        # def test_demostand(self, driver):
+        #     assert
