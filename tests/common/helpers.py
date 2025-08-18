@@ -5,7 +5,7 @@ from appium import webdriver
 
 
 def take_screenshot(driver, test_name, path="screenshots"):
-    """Универсальная функция для создания скриншотов"""
+    """Функция для создания скриншотов"""
     try:
         os.makedirs(path, exist_ok=True)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -23,7 +23,7 @@ def take_screenshot(driver, test_name, path="screenshots"):
     
     
 def check_network_connection(driver: webdriver) -> bool:
-    """Проверяем доступность интернета на телефону"""
+    """Проверяем доступность интернета на телефоне"""
     try:
         output = driver.execute_script('mobile: shell', {
             'command': 'ping',
