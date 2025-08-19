@@ -139,10 +139,12 @@ class TestCommon:
 
 @pytest.mark.tech
 def test_1(driver):
-    element = driver.find_element(*AndroidLocators.ZONE_LOCAL)
+    element = driver.find_element(*AndroidLocators.CONNECTION_TYPE)
     element.click()
+    conn_type = (driver.find_element(*AndroidLocators.CONNECTION_TYPE_HOME))
+    conn_type.click()
     time.sleep(2)
-    driver.back()
+    # driver.back()
 
     assert True , "проверочный тест"
 

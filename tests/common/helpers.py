@@ -2,7 +2,8 @@ import base64
 import os
 from datetime import datetime
 from appium import webdriver
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def take_screenshot(driver, test_name, path="screenshots"):
     """Функция для создания скриншотов"""
@@ -32,3 +33,12 @@ def check_network_connection(driver: webdriver) -> bool:
         return "1 received" in output
     except:
         return False
+    
+
+
+# def select_connection_type(connection_type_locator):
+#     try:
+#         element = WebDriverWait(driver, 10).until(EC.presence_of_element_located(connection_type_locator)
+#     except Exception as e:
+#         print(f"Screenshot error: {e}")
+#         return None
