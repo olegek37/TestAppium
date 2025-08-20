@@ -25,13 +25,13 @@ class TestGeneral:
             EC.presence_of_element_located((AppiumBy.ID, "sec-floors")))
         assert main_screen.is_displayed(), "Главный экран не отображается после горячего старта"
     
-    def test_interruptions(self, driver):
-        """Реакция на прерывания"""
-        driver.start_activity("com.android.contacts", "com.android.contacts.activities.PeopleActivity")
+    # def test_interruptions(self, driver):
+    #     """Реакция на прерывания"""
+    #     driver.start_activity("com.android.contacts", "com.android.contacts.activities.PeopleActivity")
         
-        driver.start_activity("com.mimismart.app", "your.app.MainActivity")
-        main_screen = driver.find_element(AppiumBy.ID, "sec-floors")
-        assert main_screen.is_displayed(), "Главный экран не отображается после прерывания"
+    #     driver.start_activity("com.mimismart.app", "your.app.MainActivity")
+    #     main_screen = driver.find_element(AppiumBy.ID, "sec-floors")
+    #     assert main_screen.is_displayed(), "Главный экран не отображается после прерывания"
 
     def test_interruptions(self, driver):
         
