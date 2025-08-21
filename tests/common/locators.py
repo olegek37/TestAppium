@@ -29,6 +29,8 @@ class AndroidLocators:
     CONNECTION_TYPE_INTERNET = (AppiumBy.XPATH, '//android.view.View[@resource-id="app"]//*[@text="Через интернет"]')
 
 
+    LIVING_ROOM = (AppiumBy.XPATH, "//android.view.View[@resource-id="sec-floors"]/android.view.View[1]/android.view.View[1]")
+
 
     #Зона на локальном стенде
     ZONE_LOCAL = (AppiumBy.XPATH, '//android.view.View[@resource-id="sec-floors"]')
