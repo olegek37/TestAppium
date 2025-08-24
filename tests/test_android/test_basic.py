@@ -190,6 +190,32 @@ class TestDeviceControl:
         assert "red" in rgb_device.get_attribute("color")
 
 
+    def test_sensor_panel_has_max_5_elements(self,driver):
+        """
+        Панель состояния (макс. 5 датчиков)
+        Проверяем, что в панели датчиков отображается не более 5 элементов.
+        """
+
+        # !! Надо дописать "путь" до этой зоны от кнопки дом
+        # Находим контейнер панели датчиков
+        sensors_panel = driver.find_element(*AndroidLocators.SENSORS_PANEL_ID)
+
+        # Находим ВСЕХ прямых потомков (детей) этого контейнера.
+        # Это будут наши элементы-датчики.
+        # Используем XPath: "/*" - который ищет всех прямых детей любого типа.
+        sensor_elements = sensors_panel.find_elements(by=AppiumBy.XPATH, value="./*")
+
+        # Считаем количество найденных элементов-датчиков
+        number_of_sensors = len(sensor_elements)
+        print(f"\nNumber of sensor elements found in the panel: {number_of_sensors}")
+
+        # 5. ОСНОВНАЯ ПРОВЕРКА: количество должно быть не более 5
+        assert number_of_sensors <= 5, (
+            f"Панель состояния содержит {number_of_sensors} датчиков, "
+            f"но по ТЗ должно быть не более 5."
+        )
+
+        print(f"✓ Тест пройден. В панели {number_of_sensors} датчиков, что соответствует требованию (<=5).")
 
 
 
