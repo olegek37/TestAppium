@@ -304,22 +304,6 @@ def test_1(driver):
     assert True , "проверочный тест"
 
 
-def test_app_launch_and_restart(driver):
-    """Тест запуска и перезапуска приложения"""
-    driver.find_element(*IOSLocators.HOME_BUTTON).click()
-    # Проверяем, что приложение запустилось
-    assert "Setup" in driver.page_source
-    
-    # Сворачиваем приложение
-    driver.background_app(-1)
-    
-    # Разворачиваем приложение обратно
-    driver.launch_app()
-    
-    # Проверяем, что приложение восстановилось
-    assert "Setup" in driver.page_source
-
-
 
 
 def test_local_autorisation_right(driver):
@@ -351,62 +335,26 @@ def test_local_autorisation_right(driver):
         pytest.fail(f"ошибка авторизации: {str(e)}")
 
 
-# def test_change_widget_image(driver):
-   
-#     try:
-#         # 1. Длительное нажатие на виджет
-#         widget_element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Гостиная")
-#         action = webdriver.common.touch_action.TouchAction(driver)
-#         action.long_press(widget_element, duration=2000).perform()
-        
-#         # 2. Ждем появления контейнера с картинками
-#         time.sleep(2)  # можно заменить на явное ожидание
-        
-#         # 3. Находим все контейнеры с картинками
-#         containers = driver.find_elements(
-#             AppiumBy.XPATH, 
-#             "//XCUIElementTypeOther"
-#         )
-        
-#         # 4. Определяем текущий выбранный элемент
-#         selected_container = None
-#         for container in containers:
-#             try:
-#                 # Ищем изображение галочки
-#                 container.find_element(AppiumBy.CLASS_NAME, "XCUIElementTypeImage")
-#                 selected_container = container
-#                 break
-#             except:
-#                 continue
-        
-#         # 5. Выбираем другой элемент
-#         target_container = None
-#         for container in containers:
-#             if container != selected_container:
-#                 try:
-#                     # Проверяем отсутствие галочки
-#                     container.find_element(AppiumBy.CLASS_NAME, "XCUIElementTypeImage")
-#                 except:
-#                     target_container = container
-#                     break
-        
-#         # 6. Кликаем по выбранному элементу
-#         if target_container:
-#             target_container.click()
-#             time.sleep(1)  # ждем применения изменений
-            
-#             # Проверяем, что галочка переместилась
-#             new_selected = driver.find_elements(
-#                 AppiumBy.XPATH, 
-#                 "//XCUIElementTypeOther[contains(.//XCUIElementTypeImage)]"
-#             )
-            
-#             assert target_container in new_selected, "Картинка не была успешно изменена"
-#         else:
-#             assert False, "Не удалось найти альтернативный элемент для выбора"
-            
-#     finally:
-#         driver.quit()
+def test_app_launch_and_restart(driver):
+    """Тест запуска и перезапуска приложения для iOS"""
+    driver.find_element(*IOSLocators.HOME_BUTTON).click()
+    assert "Setup" in driver.page_source
+    
+    # сворачиваем приложение
+    driver.execute_script("mobile: terminateApp", {
+        "bundleId": "com.mimismart.app"  
+    })
+    time.sleep(3)
+    
+    # запускаем приложение через activateApp
+    driver.execute_script("mobile: activateApp", {
+        "bundleId": "com.mimismart.app"  
+    })
+    
+    assert "Дом" in driver.page_source
+
+
+
 
 #4 Долгое удержание карточки зоны - выбор картинки из медиатеки
 def test_zone_image_change(driver):
