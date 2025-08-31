@@ -11,7 +11,7 @@ def pytest_addoption(parser):
 @pytest.fixture(scope='session')
 def appium_server(request):
     return request.config.getoption("--appium_server")
-
+ 
 @pytest.fixture(scope='function')
 def driver(request, appium_server):
     platform = request.config.getoption("--platform")
@@ -29,11 +29,12 @@ def driver(request, appium_server):
     else:  # iOS
         capabilities = {
             "platformName": "iOS",
-            "appium:platformVersion": "16.4",
-            "appium:deviceName": "iPhone 14",
+            "appium:platformVersion": "18.2",
+            "appium:deviceName": "iPhone 16 Pro",
             "appium:automationName": "XCUITest",
-            "appium:app": os.path.abspath("app/ios/mimi.ipa"),
-            "appium:noReset": True
+            "appium:bundleId": "com.mimismart.app",
+            "appium:noReset": True,
+            "appium:autoAcceptAlerts": True  # автоматически принимать системные алерты
         }
         options = XCUITestOptions().load_capabilities(capabilities)
     

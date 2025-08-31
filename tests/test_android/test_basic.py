@@ -200,10 +200,9 @@ class TestDeviceControl:
         # Находим контейнер панели датчиков
         sensors_panel = driver.find_element(*AndroidLocators.SENSORS_PANEL_ID)
 
-        # Находим ВСЕХ прямых потомков (детей) этого контейнера.
-        # Это будут наши элементы-датчики.
-        # Используем XPath: "/*" - который ищет всех прямых детей любого типа.
-        sensor_elements = sensors_panel.find_elements(by=AppiumBy.XPATH, value="./*")
+        # Находим ВСЕХ прямых потомков  android.view.View  этого контейнера.
+
+        sensor_elements = sensors_panel.find_elements(by=AppiumBy.XPATH, value="./android.view.View")
 
         # Считаем количество найденных элементов-датчиков
         number_of_sensors = len(sensor_elements)
@@ -215,7 +214,15 @@ class TestDeviceControl:
             f"но по ТЗ должно быть не более 5."
         )
 
-        print(f"✓ Тест пройден. В панели {number_of_sensors} датчиков, что соответствует требованию (<=5).")
+
+
+
+
+
+
+
+
+
 
 
 
